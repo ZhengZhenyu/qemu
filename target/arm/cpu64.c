@@ -253,6 +253,25 @@ static void aarch64_a72_initfn(Object *obj)
     define_arm_cp_regs(cpu, cortex_a72_a57_a53_cp_reginfo);
 }
 
+static void aarch64_kunpeng_920_initfn(Object *obj)
+{
+    ARMCPU *cpu = ARM_CPU(obj);
+
+    /*
+     * HiSilicon Kunpeng-920 CPU is similar to cortex-a72,
+     * so first initialize cpu data as cortex-a72 CPU,
+     * and then update the corresponding registers.
+     */
+    aarch64_a72_initfn(obj);
+
+    cpu->midr = 0x480fd010;
+    cpu->ctr = 0x84448004;
+    cpu->isar.id_aa64pfr0 = 0x11001111;
+    cpu->id_aa64dfr0 = 0x110305408;
+    cpu->isar.id_aa64isar0 = 0x10211120;
+    cpu->isar.id_aa64mmfr0 = 0x101125;
+}
+
 void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
 {
     /*
@@ -747,6 +766,7 @@ static const ARMCPUInfo aarch64_cpus[] = {
     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
     { .name = "cortex-a72",         .initfn = aarch64_a72_initfn },
+    { .name = "Kunpeng-920",        .initfn = aarch64_kunpeng_920_initfn},
     { .name = "max",                .initfn = aarch64_max_initfn },
     { .name = NULL }
 };
