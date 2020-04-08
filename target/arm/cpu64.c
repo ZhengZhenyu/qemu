@@ -267,7 +267,7 @@ static void aarch64_kunpeng_920_initfn(Object *obj)
     cpu->midr = 0x480fd010;
     cpu->ctr = 0x84448004;
     cpu->isar.id_aa64pfr0 = 0x11001111;
-    cpu->id_aa64dfr0 = 0x110305408;
+    cpu->isar.id_aa64dfr0 = 0x110305408;
     cpu->isar.id_aa64isar0 = 0x10211120;
     cpu->isar.id_aa64mmfr0 = 0x101125;
 }
